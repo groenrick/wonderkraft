@@ -2,7 +2,7 @@
     <div class="flex justify-between items-center mb-4">
         <h3 class="text-lg font-medium text-gray-800">Title & Paragraph</h3>
         <button type="button" class="text-red-600 hover:text-red-700" onclick="removeBlock({{ $index }})">
-            Remove Block
+            Rfadfdsfsdfsd
         </button>
     </div>
 

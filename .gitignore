@@ -6,6 +6,7 @@
 /storage/*.key
 /storage/pail
 /vendor
+/letsencrypt
 .editorconfig
 .env
 .env.backup
