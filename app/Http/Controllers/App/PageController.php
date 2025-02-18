@@ -4,6 +4,9 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\Scopes\SiteScope;
+use App\Models\Site;
+use App\Models\User;
 use App\Services\ContentBlockService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,7 +16,10 @@ use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
-    public function index(Request $request)
+    public function index(
+        Factory $viewFactory,
+        Request $request,
+    ): View
     {
         // Start with root pages (no parent)
         $query = Page::query()
@@ -104,7 +110,7 @@ class PageController extends Controller
         ContentBlockService $contentBlockService,
     ): View {
         $page = new Page();
-        $pages = Page::where('status', 'published')->get();
+        $pages = Page::withoutGlobalScope(SiteScope::class)->where('status', 'published')->get();
         $blocks = $contentBlockService->getBlocksForJavaScript();
 
         return $viewFactory->make('app.pages.form', [
@@ -143,7 +149,7 @@ class PageController extends Controller
 
         try {
             // Create the page
-            $page = Page::create([
+            $page = Page::withoutGlobalScope(SiteScope::class)->create([
                 'title' => $validated['title'],
                 'slug' => trim($validated['slug'], '/'),
                 'content' => $validated['content'],
@@ -178,7 +184,7 @@ class PageController extends Controller
         ContentBlockService $contentBlockService,
         Page $page,
     ): View {
-        $pages = Page::where('id', '!=', $page->id)
+        $pages = Page::withoutGlobalScope(SiteScope::class)->where('id', '!=', $page->id)
             ->where('status', 'published')
             ->get();
         $blocks = $contentBlockService->getBlocksForJavaScript();

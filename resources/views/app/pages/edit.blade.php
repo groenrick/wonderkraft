@@ -25,7 +25,7 @@
                                 Save Changes
                             </button>
                             <button type="submit" name="status" value="published" class="px-4 py-2 text-gray-700 bg-white border rounded-lg hover:bg-gray-50">
-                                Save and Publish
+                                Publish
                             </button>
                         @endif
                     </div>

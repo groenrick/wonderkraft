@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Traits\BelongsToSite;
 use App\Services\ContentBlockService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Page extends Model
 {
     use HasFactory;
+    use BelongsToSite;
 
     protected $fillable = [
         'title',
@@ -20,13 +23,16 @@ class Page extends Model
         'meta_description',
         'featured_image',
         'status',
-        'user_id'
+        'user_id',
+		'site_id',
+        'is_homepage',
     ];
 
     protected $casts = [
         'parent_id' => 'integer',
         'user_id' => 'integer',
         'content' => 'array',
+        'is_homepage' => 'boolean',
     ];
 
     // Parent-child relationship
@@ -88,5 +94,26 @@ class Page extends Model
         }
 
         return $html;
+    }
+
+    public function domains()
+    {
+        return $this->hasMany(Domain::class);
+    }
+
+    public function site(): BelongsTo
+    {
+        return $this->belongsTo(Site::class);
+    }
+
+
+    // Get the full URL for this page
+    public function getUrlAttribute(): string
+    {
+        if ($this->is_homepage) {
+            return $this->site->primaryDomain->full_domain;
+        }
+
+        return $this->site->primaryDomain->full_domain . '/' . $this->slug;
     }
 }

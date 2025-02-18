@@ -10,6 +10,7 @@ use App\ContentBlocks\StatsBlock;
 use App\ContentBlocks\TestimonialsBlock;
 use App\ContentBlocks\TitleParagraphBlock;
 use App\Services\ContentBlockService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Factory as ViewFactory;
 
@@ -33,6 +34,11 @@ class AppServiceProvider extends ServiceProvider
             $service->register(TestimonialsBlock::class);
 
             return $service;
+        });
+
+        View::composer('*', function ($view) {
+            $view->with('currentSite', app('site'));
+            $view->with('currentDomain', app('domain'));
         });
     }
 

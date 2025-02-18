@@ -11,7 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->append(\App\Http\Middleware\ResolveDomain::class);
+
+        // Add the site scoping middleware
+        $middleware->alias([
+            'scope.admin.site' => \App\Http\Middleware\ScopeAdminToSite::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
