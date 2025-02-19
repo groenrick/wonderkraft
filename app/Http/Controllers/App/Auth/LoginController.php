@@ -14,7 +14,7 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      */
-    protected string $redirectTo = '/app';
+    protected string $redirectTo = '/';
 
     /**
      * Show the application's login form.
