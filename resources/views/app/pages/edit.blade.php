@@ -1,5 +1,7 @@
 @extends('app.layouts.app')
 
+@section('title', 'Edit page')
+
 @section('main')
     <main class="ml-64 pt-16 min-h-screen">
         <div class="p-8">

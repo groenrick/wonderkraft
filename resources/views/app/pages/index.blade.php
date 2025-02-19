@@ -1,5 +1,7 @@
 @extends('app.layouts.app')
 
+@section('title', 'Pages')
+
 @section('main')
     <!-- Main Content -->
     <main class="ml-64 pt-16 min-h-screen">

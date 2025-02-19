@@ -1,5 +1,6 @@
 @extends('app.layouts.app')
 
+@section('title', 'New page page')
 
 @section('main')
     <!-- Main Content -->
@@ -10,7 +11,7 @@
 
                 <div class="flex justify-between items-center mb-8">
                     <div>
-                        <h1 class="text-2xl font-semibold text-gray-800">Create New Page</h1>
+                        <h1 class="text-2xl font-semibold text-gray-800">Add New Page</h1>
                         <p class="mt-1 text-gray-600">Add a new page to your website</p>
                     </div>
                     <div class="flex gap-3">

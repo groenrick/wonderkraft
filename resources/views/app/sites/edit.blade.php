@@ -1,6 +1,8 @@
 {{-- resources/views/app/sites/edit.blade.php --}}
 @extends('app.layouts.app')
 
+@section('title', 'Edit site')
+
 @section('main')
     <!-- Main Content -->
     <main class="ml-64 pt-16 min-h-screen">

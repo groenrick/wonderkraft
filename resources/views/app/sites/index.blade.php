@@ -1,6 +1,8 @@
 {{-- resources/views/app/sites/index.blade.php --}}
 @extends('app.layouts.app')
 
+@section('title', 'Sites')
+
 @section('main')
     <!-- Main Content -->
     <main class="ml-64 pt-16 min-h-screen">
