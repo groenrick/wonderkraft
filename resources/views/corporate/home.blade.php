@@ -1,7 +1,7 @@
 {{-- resources/views/corporate/home.blade.php --}}
 @extends('corporate.layouts.main')
 
-@section('title', 'Your CMS Platform - Build Websites Faster')
+@section('title', 'Build Websites Faster - WonderKraft')
 
 @section('content')
     {{-- Hero Section --}}

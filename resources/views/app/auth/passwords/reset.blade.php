@@ -2,10 +2,16 @@
 @extends('app.layouts.auth')
 
 @section('content')
-    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">
             <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                <div class="flex flex-col items-center mb-8">
+                    <img src="{{ asset('wonderkraft-logo.svg') }}" alt="Wonderkraft" class="h-16">
+                    <h1 class="mt-1.5 text-xl font-bold bg-gradient-to-r from-indigo-500 via-purple-600 to-purple-400 bg-clip-text text-transparent">
+                        WonderKraft
+                    </h1>
+                </div>
+                <h2 class="text-center text-3xl font-extrabold text-gray-900">
                     Reset Password
                 </h2>
             </div>
