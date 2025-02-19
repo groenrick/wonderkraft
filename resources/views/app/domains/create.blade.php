@@ -47,7 +47,7 @@
                                     placeholder="mysite"
                                     required
                                 >
-                                <span class="px-4 py-2 bg-gray-100 border border-l-0 rounded-r-lg text-gray-600">.sitebuilder.test</span>
+                                <span class="px-4 py-2 bg-gray-100 border border-l-0 rounded-r-lg text-gray-600">.wonderkraft.online</span>
                             </div>
                             <p class="mt-2 text-sm text-gray-500">This will be your default subdomain</p>
                         </div>

@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
 class PageController extends Controller
 {
     public function __construct(
-
         private readonly Dispatcher $dispatcher,
     )
     {
@@ -26,7 +25,8 @@ class PageController extends Controller
         string $slug = '',
     )
     {
-        $page = Page::where('slug', $slug)
+//        dd(app('site')->pages);
+        $page = app('site')->pages()->where('slug', $slug)
             ->where('status', 'published')
             ->with(['children' => function($query) {
                 $query->where('status', 'published');

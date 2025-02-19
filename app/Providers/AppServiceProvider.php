@@ -37,8 +37,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $view->with('currentSite', app('site'));
-            $view->with('currentDomain', app('domain'));
+            if (app()->bound('site')) {
+                $view->with('currentSite', app('site'));
+            }
+//            $view->with('currentDomain', app('domain'));
         });
     }
 

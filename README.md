@@ -30,7 +30,8 @@ cp docker-compose.example.yml docker-compose.yml
 ### macOS
 ```bash
 brew install dnsmasq
-echo 'address=/.sitebuilder.test/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.d/sitebuilder.conf
+echo 'address=/.wonderkraft.test/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.d/sitebuilder.conf
+echo 'address=/wonderkraft.test/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.d/sitebuilder.conf
 sudo brew services restart dnsmasq
 sudo mkdir -p /etc/resolver
 echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/test
@@ -39,7 +40,8 @@ echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/test
 ### Linux
 ```bash
 sudo apt-get install dnsmasq
-echo 'address=/.sitebuilder.test/127.0.0.1' | sudo tee -a /etc/dnsmasq.conf
+echo 'address=/.wonderkraft.test/127.0.0.1' | sudo tee -a /etc/dnsmasq.conf
+echo 'address=/wonderkraft.test/127.0.0.1' | sudo tee -a /etc/dnsmasq.conf
 sudo systemctl restart dnsmasq
 ```
 
@@ -47,7 +49,8 @@ sudo systemctl restart dnsmasq
 1. Install Acrylic DNS Proxy from https://mayakron.altervista.org/support/acrylic/Home.htm
 2. Add this line to Acrylic's host file:
    ```
-   127.0.0.1 *.sitebuilder.test
+   127.0.0.1 *.wonderkraft.test
+   127.0.0.1 wonderkraft.test
    ```
 3. Set your network adapter's DNS to 127.0.0.1
 

@@ -33,7 +33,7 @@ services:
             - 'host.docker.internal:host-gateway'
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.laravel.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.sitebuilder.test`)"
+            - "traefik.http.routers.laravel.rule=HostRegexp(`{subdomain:[a-z0-9-]+}.wonderkraft.test`, `wonderkraft.test`)"
             - "traefik.http.routers.laravel.entrypoints=websecure"
             - "traefik.http.routers.laravel.tls=true"
             - "traefik.http.services.laravel.loadbalancer.server.port=80"

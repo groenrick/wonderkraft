@@ -10,14 +10,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 
-class ResolveDomain
+class ResolveCustomerDomain
 {
     public function handle(Request $request, Closure $next)
     {
         $host = $request->getHost();
 
-        // Extract subdomain from sitebuilder.test
-        if (str_ends_with($host, 'sitebuilder.test')) {
+        // Extract subdomain from *.wonderkraft.online
+        if (str_ends_with($host, config('app.domains.customer'))) {
             $subdomain = explode('.', $host)[0];
             $domain = Domain::where('name', $subdomain)
                 ->where('is_active', true)

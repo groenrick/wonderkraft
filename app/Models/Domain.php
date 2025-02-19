@@ -30,6 +30,6 @@ class Domain extends Model
 
     public function getFullDomainAttribute(): string
     {
-        return $this->custom_domain ?? "{$this->name}.sitebuilder.test";
+        return $this->custom_domain ?? "{$this->name}.wonderkraft.online";
     }
 }

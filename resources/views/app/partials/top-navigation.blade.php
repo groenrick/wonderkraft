@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                <span class="text-xl font-semibold text-gray-800">WonderKraft - Dashboard</span>
+                <span class="text-xl font-semibold text-gray-800">{{ config('app.name') }} - Dashboard</span>
             </div>
 
             <div class="flex items-center gap-6">

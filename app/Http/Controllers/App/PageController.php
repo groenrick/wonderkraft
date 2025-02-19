@@ -5,8 +5,6 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Scopes\SiteScope;
-use App\Models\Site;
-use App\Models\User;
 use App\Services\ContentBlockService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -149,7 +147,7 @@ class PageController extends Controller
 
         try {
             // Create the page
-            $page = Page::withoutGlobalScope(SiteScope::class)->create([
+            $page = app('site')->pages()->create([
                 'title' => $validated['title'],
                 'slug' => trim($validated['slug'], '/'),
                 'content' => $validated['content'],
@@ -159,7 +157,6 @@ class PageController extends Controller
                 'meta_description' => $validated['meta_description'],
                 'featured_image' => $validated['featured_image'] ?? null,
                 'status' => $validated['status'],
-                //                'user_id' => auth()->id(), // Assuming you're using authentication
             ]);
 
             return redirect()
@@ -184,7 +181,7 @@ class PageController extends Controller
         ContentBlockService $contentBlockService,
         Page $page,
     ): View {
-        $pages = Page::withoutGlobalScope(SiteScope::class)->where('id', '!=', $page->id)
+        $pages = app('site')->pages()->where('id', '!=', $page->id)
             ->where('status', 'published')
             ->get();
         $blocks = $contentBlockService->getBlocksForJavaScript();

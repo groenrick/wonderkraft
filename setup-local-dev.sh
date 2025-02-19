@@ -27,7 +27,7 @@ case "${OS}" in
             sudo apt-get update
             sudo apt-get install -y dnsmasq
         fi
-        echo 'address=/.sitebuilder.test/127.0.0.1' | sudo tee -a /etc/dnsmasq.conf
+        echo 'address=/.wonderkraft.test/127.0.0.1' | sudo tee -a /etc/dnsmasq.conf
         sudo systemctl restart dnsmasq
         ;;
     Darwin*)
@@ -38,14 +38,14 @@ case "${OS}" in
         fi
         brew install dnsmasq
         mkdir -p $(brew --prefix)/etc/dnsmasq.d
-        echo 'address=/.sitebuilder.test/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.d/sitebuilder.conf
+        echo 'address=/.wonderkraft.test/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.d/wonderkraft.conf
         sudo brew services restart dnsmasq
         sudo mkdir -p /etc/resolver
         echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/test
         ;;
     MINGW*|CYGWIN*|MSYS*)
         echo -e "${YELLOW}For Windows, please install Acrylic DNS Proxy manually and add:${NC}"
-        echo "127.0.0.1 *.sitebuilder.test"
+        echo "127.0.0.1 *.wonderkraft.test"
         echo "to your Acrylic hosts file."
         ;;
 esac
@@ -57,6 +57,6 @@ echo -e "${GREEN}Starting Docker services...${NC}"
 
 echo -e "${GREEN}Setup complete!${NC}"
 echo -e "You can now access:"
-echo -e "- https://app.sitebuilder.test"
-echo -e "- https://admin.sitebuilder.test"
-echo -e "- https://[any-subdomain].sitebuilder.test"
+echo -e "- https://app.wonderkraft.test"
+echo -e "- https://admin.wonderkraft.test"
+echo -e "- https://[any-subdomain].wonderkraft.test"

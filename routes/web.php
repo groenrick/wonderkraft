@@ -8,13 +8,18 @@ use App\Http\Controllers\Corporate\HomeController;
 use App\Http\Controllers\Corporate\PageController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\Public\PageController as PublicPageController;
+use App\Http\Middleware\ScopeAdminToSite;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function (){ return redirect()->route('app.dashboard'); });
 Route::get('/login', function (){ return redirect()->route('app.login'); })->name('login');
 Route::group([
     'prefix' => '/app',
-    'middleware' => ['auth', 'scope.admin.site'],
+    'middleware' => [
+        'auth',
+        ScopeAdminToSite::class,
+    ],
+    'domain' => config('app.domains.app'),
 ], function () {
 
     Route::get('/', [AppController::class, 'index'])
@@ -55,27 +60,14 @@ Route::group([
 
 
 });
-// Logout
-Route::post('/app/logout', [App\Http\Controllers\App\Auth\LoginController::class, 'logout'])
-    ->name('app.logout');
 
-//Route::middleware('auth')->group(function () {
-Route::group([], function () {
-    Route::post('/domains', [DomainController::class, 'store']);
-    Route::put('/domains/{domain}', [DomainController::class, 'update']);
-});
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Authentication Routes
-|--------------------------------------------------------------------------
-*/
 Route::group([
     'prefix' => '/app',
+    'domain' => 'app.wonderkraft.test'
 ], function () {
 
+    Route::post('/logout', [App\Http\Controllers\App\Auth\LoginController::class, 'logout'])
+        ->name('app.logout');
     // User Authentication
     Route::group(['middleware' => 'guest'], function () {
         Route::get('/register', [App\Http\Controllers\App\Auth\RegisterController::class, 'showRegistrationForm'])->name('app.register');
@@ -114,7 +106,10 @@ Route::group([
 | Corporate/Marketing Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['as' => 'corporate.'], function () {
+Route::group([
+    'as' => 'corporate.',
+    'domain' => 'wonderkraft.test',
+], function () {
     // Main Pages
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/about', [PageController::class, 'about'])->name('about');
@@ -149,7 +144,7 @@ Route::group(['as' => 'corporate.'], function () {
     // Support & Documentation
     Route::get('/support', [PageController::class, 'support'])->name('support');
     Route::get('/docs', [PageController::class, 'docs'])->name('docs');
-    Route::get('/api-docs', [PageController::class, 'apiDocs'])->name('api');
+//    Route::get('/api-docs', [PageController::class, 'apiDocs'])->name('api');
 
     // Tutorials & Resources
     Route::get('/tutorials', [PageController::class, 'tutorials'])->name('tutorials');
@@ -169,7 +164,12 @@ Route::group(['as' => 'corporate.'], function () {
 });
 
 
+
 // This goes AFTER your admin routes
 Route::get('/{slug}', [PublicPageController::class, 'show'])
     ->where('slug', '.*') // Allows for nested slugs like "about/team"
+    ->middleware([
+//        \App\Http\Middleware\RequireSite::class,
+        \App\Http\Middleware\ResolveCustomerDomain::class,
+    ])
     ->name('pages.show');
