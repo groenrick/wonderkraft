@@ -10,10 +10,10 @@ class SiteScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        if (app()->bound('site')) {
-            $site = current_site();
-            $builder->where('site_id', $site->id);
-        }
+//        if (app()->bound('site')) {
+//            $site = current_site();
+//            $builder->where('site_id', $site->id);
+//        }
     }
 }
 

@@ -20,7 +20,8 @@ class PageController extends Controller
     ): View
     {
         // Start with root pages (no parent)
-        $query = Page::query()
+        $query = current_site()
+            ->pages()
             ->with(['children'])
             ->withCount('children')
             ->whereNull('parent_id');
@@ -34,7 +35,7 @@ class PageController extends Controller
         if ($request->has('search')) {
             $search = $request->search;
             // When searching, we want to search all pages, not just root pages
-            $query = Page::query()
+            $query = current_site()->pages()
                 ->with(['author', 'children'])
                 ->withCount('children')
                 ->where(function ($q) use ($search) {
@@ -147,7 +148,7 @@ class PageController extends Controller
 
         try {
             // Create the page
-            $page = app('site')->pages()->create([
+            $page = current_site()->pages()->create([
                 'title' => $validated['title'],
                 'slug' => trim($validated['slug'], '/'),
                 'content' => $validated['content'],
@@ -181,7 +182,7 @@ class PageController extends Controller
         ContentBlockService $contentBlockService,
         Page $page,
     ): View {
-        $pages = app('site')->pages()->where('id', '!=', $page->id)
+        $pages = current_site()->pages()->where('id', '!=', $page->id)
             ->where('status', 'published')
             ->get();
         $blocks = $contentBlockService->getBlocksForJavaScript();

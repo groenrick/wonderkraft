@@ -47,12 +47,16 @@ Route::group([
     Route::delete('/admin/pages/{page}', [AppPageController::class, 'destroy'])
         ->name('app.pages.destroy');
 
+
+    Route::get('sites', [SiteController::class, 'index'])->name('app.sites.index');
+
     Route::get('sites/create', [SiteController::class, 'create'])
         ->withoutMiddleware('scope.admin.site')
         ->name('app.sites.create');
 
-    Route::get('sites', [SiteController::class, 'index'])->name('app.sites.index');
-    Route::post('sites', [SiteController::class, 'store'])->name('app.sites.store');
+    Route::post('sites', [SiteController::class, 'store'])
+        ->withoutMiddleware('scope.admin.site')
+        ->name('app.sites.store');
     Route::get('sites/{site}/edit', [SiteController::class, 'edit'])->name('app.sites.edit');
     Route::put('sites/{site}', [SiteController::class, 'update'])->name('app.sites.update');
     Route::delete('sites/{site}', [SiteController::class, 'destroy'])->name('app.sites.destroy');
