@@ -123,8 +123,7 @@ Route::group([
 */
 Route::group([
     'as' => 'corporate.',
-    'domain' => '{subdomain}'.config('app.domains.corporate'),
-    'where' => ['subdomain' => '(www.)?'],
+    'domain' => config('app.domains.corporate'),
 ], function () {
     // Main Pages
     Route::get('/', [HomeController::class, 'index'])->name('home');
