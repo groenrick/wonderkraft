@@ -11,10 +11,14 @@ use App\Http\Controllers\Public\PageController as PublicPageController;
 use App\Http\Middleware\ScopeAdminToSite;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', function (){ return redirect()->route('app.dashboard'); });
-Route::get('/login', function (){ return redirect()->route('app.login'); })->name('login');
+route::group([
+        'domain' => config('app.domains.app'),
+    ], function () {
+    Route::get('/dashboard', function (){ return redirect()->route('app.dashboard'); });
+    Route::get('/logi', function (){ return redirect()->route('app.login'); })->name('login');
+});
+
 Route::group([
-    'prefix' => '/app',
     'middleware' => [
         'auth',
         ScopeAdminToSite::class,
@@ -62,8 +66,7 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => '/app',
-    'domain' => 'app.wonderkraft.test'
+    'domain' => config('app.domains.app'),
 ], function () {
 
     Route::post('/logout', [App\Http\Controllers\App\Auth\LoginController::class, 'logout'])
@@ -108,7 +111,7 @@ Route::group([
 */
 Route::group([
     'as' => 'corporate.',
-    'domain' => 'wonderkraft.test',
+    'domain' => config('app.domains.corporate'),
 ], function () {
     // Main Pages
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -123,8 +126,10 @@ Route::group([
     Route::get('/changelog', [PageController::class, 'changelog'])->name('changelog');
 
     // Resources
-    Route::get('/blog', [BlogController::class, 'index'])->name('blog');
-    Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
+//    Route::get('/blog', [BlogController::class, 'index'])->name('blog');
+//    Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
+    Route::get('/blog', function() { return '';})->name('blog');
+    Route::get('/blog/{post:slug}', function() { return '';})->name('blog.show');
     Route::get('/docs', [PageController::class, 'docs'])->name('docs');
     Route::get('/tutorials', [PageController::class, 'tutorials'])->name('tutorials');
     Route::get('/api', [PageController::class, 'api'])->name('api');
@@ -164,12 +169,16 @@ Route::group([
 });
 
 
+Route::group([
+    'domain' => config('app.domains.customer'),
+], function () {
 
-// This goes AFTER your admin routes
-Route::get('/{slug}', [PublicPageController::class, 'show'])
-    ->where('slug', '.*') // Allows for nested slugs like "about/team"
-    ->middleware([
-//        \App\Http\Middleware\RequireSite::class,
-        \App\Http\Middleware\ResolveCustomerDomain::class,
-    ])
-    ->name('pages.show');
+    // This goes AFTER your admin routes
+    Route::get('/{slug}', [PublicPageController::class, 'show'])
+        ->where('slug', '.*') // Allows for nested slugs like "about/team"
+        ->middleware([
+            //        \App\Http\Middleware\RequireSite::class,
+            \App\Http\Middleware\ResolveCustomerDomain::class,
+        ])
+        ->name('pages.show');
+});
