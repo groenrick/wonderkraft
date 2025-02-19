@@ -79,7 +79,7 @@
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Related Pages</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($page->children as $childPage)
-                    <a href="/{{ $childPage->full_slug }}" class="block group">
+                    <a href="/{{ $childPage->slug }}" class="block group">
                         <div class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                             @if($childPage->featured_image)
                                 <img
