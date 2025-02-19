@@ -31,7 +31,7 @@
                 <nav class="flex" aria-label="Breadcrumb">
                     <ol class="flex items-center space-x-4">
                         <li>
-                            <a href="/" class="text-gray-400 hover:text-gray-500">Home</a>
+                            <a href="/home" class="text-gray-400 hover:text-gray-500">Home</a>
                         </li>
                         @foreach(explode('/', $page->full_slug) as $i => $slug)
                             <li>
