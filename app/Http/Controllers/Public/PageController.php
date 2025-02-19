@@ -22,11 +22,11 @@ class PageController extends Controller
 
     public function show(
         Request $request,
+        string $domain,
         string $slug = '',
     )
     {
-//        dd(app('site')->pages);
-        $page = app('site')->pages()->where('slug', $slug)
+        $page = current_site()->pages()->where('slug', $slug)
             ->where('status', 'published')
             ->with(['children' => function($query) {
                 $query->where('status', 'published');

@@ -40,9 +40,6 @@ class ResolveCustomerDomain
         app()->instance('site', $domain->site);
         app()->instance('domain', $domain);
 
-        // Now load the pages
-        $domain->load('site.pages'); // The scope will work now because site is bound
-
         // Also store in request for easier access in the current request lifecycle
         $request->merge([
             'site' => $domain->site,

@@ -11,6 +11,14 @@ use App\Http\Controllers\Public\PageController as PublicPageController;
 use App\Http\Middleware\ScopeAdminToSite;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/{slug}', [PublicPageController::class, 'show'])
+    ->domain('{sub}.'.config('app.domains.customer'))
+    ->where('slug', '.*')
+    ->middleware([
+        \App\Http\Middleware\ResolveCustomerDomain::class,
+    ])
+    ->name('pages.show');
+
 route::group([
         'domain' => config('app.domains.app'),
     ], function () {
@@ -172,17 +180,3 @@ Route::group([
     Route::post('/request-demo', [PageController::class, 'requestDemo'])->name('demo.request');
 });
 
-
-Route::group([
-    'domain' => config('app.domains.customer'),
-], function () {
-
-    // This goes AFTER your admin routes
-    Route::get('/{slug}', [PublicPageController::class, 'show'])
-        ->where('slug', '.*') // Allows for nested slugs like "about/team"
-        ->middleware([
-            //        \App\Http\Middleware\RequireSite::class,
-            \App\Http\Middleware\ResolveCustomerDomain::class,
-        ])
-        ->name('pages.show');
-});
