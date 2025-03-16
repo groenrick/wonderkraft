@@ -26,7 +26,7 @@
             </div>
 
             <div class="hidden md:flex items-center space-x-4">
-                <a href="{{ route('app.login') }}" class="text-gray-600 hover:text-gray-900">Sign In</a>
+                <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900">Sign In</a>
                 <a href="{{ route('app.register') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                     Start Free Trial
                 </a>
@@ -63,7 +63,7 @@
                 <a href="#pricing" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Pricing</a>
                 <a href="{{ route('corporate.blog') }}" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Blog</a>
                 <div class="border-t border-gray-200 my-2"></div>
-                <a href="{{ route('app.login') }}" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Sign In</a>
+                <a href="{{ route('login') }}" class="block px-3 py-2 text-gray-600 hover:text-gray-900">Sign In</a>
                 <a href="{{ route('app.register') }}" class="block px-3 py-2 text-blue-600 hover:text-blue-700">Start Free Trial</a>
             </div>
         </div>

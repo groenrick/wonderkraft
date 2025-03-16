@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\App\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -11,11 +13,6 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    /**
-     * Where to redirect users after login.
-     */
-    protected string $redirectTo = '/';
-
     /**
      * Show the application's login form.
      */
@@ -29,8 +26,29 @@ class LoginController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function login(Request $request): RedirectResponse
+    public function login(
+        Request $request,
+        Application $app,
+    ): RedirectResponse
     {
+        if ($app->isLocal()) {
+            $credentials = $request->validate([
+                'email' => ['required', 'string', 'email'],
+            ]);
+
+            $userModel = User::where('email', $credentials['email'])->first();
+
+            if (!$userModel) {
+                throw ValidationException::withMessages([
+                    'email' => 'Email does not exist in our records.',
+                ]);
+            }
+
+            Auth::login($userModel);
+
+            return redirect()->intended(route('app.dashboard'));
+        }
+
         $credentials = $request->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
@@ -39,7 +57,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended($this->redirectTo);
+            return redirect()->intended(route('app.dashboard'));
         }
 
         throw ValidationException::withMessages([
@@ -57,6 +75,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('app.login');
+        return redirect()->route('login');
     }
 }

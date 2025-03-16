@@ -13,9 +13,6 @@ route::group([
     Route::get('/dashboard', function () {
         return redirect()->route('app.dashboard');
     });
-    Route::get('/logi', function () {
-        return redirect()->route('app.login');
-    })->name('login');
 });
 
 Route::group([
@@ -75,9 +72,12 @@ Route::group([
         ->name('app.logout');
     // User Authentication
     Route::group(['middleware' => 'guest'], function () {
-        Route::get('/register', [App\Http\Controllers\App\Auth\RegisterController::class, 'showRegistrationForm'])->name('app.register');
+        Route::get('/register', [App\Http\Controllers\App\Auth\RegisterController::class, 'showRegistrationForm'])
+            ->name('app.register');
         Route::post('/register', [App\Http\Controllers\App\Auth\RegisterController::class, 'register']);
-        Route::get('/login', [App\Http\Controllers\App\Auth\LoginController::class, 'showLoginForm'])->name('app.login');
+
+        Route::get('/login', [App\Http\Controllers\App\Auth\LoginController::class, 'showLoginForm'])
+            ->name('login');// route name must be 'login' as this is what laravel needs
         Route::post('/login', [App\Http\Controllers\App\Auth\LoginController::class, 'login']);
     });
 
